@@ -69,7 +69,15 @@ The prior was defined as mixture prior, with 3 beta components, for each of
 
 
 ### Testing Allocations using Multi-Armed Bandits
-Given beta-posteriors, we target passengers scheduled to arrive for testing via Batched Bandit algorithm. We use a one-step lookahead approximation to the Gittins index to appropriately balance exploration and exploitation, and a customized heuristic to ensure that testing allocations respect the budgets at each port of entry while accounting for the (sometimes significant) incidence of "no-shows" (passengers who are scheduled to arrive who cancel their trip last minute).  We note that due to operational constraints, this step is performed once daily, meaning in each "batch" of the bandit we are assigning aproximately 8K tests to approximately 60K potential passengers.  (The sample data provided is smaller than these representative numbers).  
+When allocating tests, we must balance allocating tests across all types to monitor the progression of prevalence in different locations (exploration), and allocating tests to the types with the highest prevalence to maximize the number of infected passengers identified (exploitation). We customize a classic bandit algorithm (a one-step lookahead approximation to the Gittins index) to balance this exploration-exploitation tradeoff. Our algorithm additionally accounts for
+1. Nonstationarity: the prevalence in any location is rapidly evolving during the course of the pandemic,
+2. Batched decision-making: all testing allocations must be made at the start of the day due to operational constraints,
+3. Delayed feedback: lab test results require two days to be received,
+4. Port-specific testing constraints: different ports have different passenger arrival mixes and testing budgets.
+
+First, to address nonstationarity, we use a 2-week rolling window of testing data for all prevalence estimates. Next, traditional batched bandit algorithms follow an explore-then-commit strategy, and thus are not appropriate in highly nonstationary environments where one must weave exploration and exploitation within the same batch. Thus, we perform *certainty-equivalent updates* when a test is allocated to a passenger, essentially simulating the reduction in the variance of our posterior estimates by performing a single test. Within a batch, this approach allows us to allocate a sufficient number of tests to resolve variance for each type (exploration) and allocate the remaining tests to types with high prevalence (exploitation). Delayed feedback is naturally accounted for by additionally performing certainty-equivalent updates for any tests that have been performed but whose results have not yet been received. Lastly, due to port-specific constraints, we may wish to "save tests" at ports with low testing budgets that receive unique passenger types. We employ a greedy heuristic to ensure that we allocate tests at the least constrained port (as measured by remaining testing capacity) when possible. Our testing budgets also account for the (sometimes significant) incidence of "no-shows" (passengers who are scheduled to arrive who cancel their trip last minute).
+
+In a typical batch, we assign aproximately 8K tests to approximately 60K potential passengers. (The sample data provided is smaller than these representative numbers).  
 
 
 ## Structure of Repository
