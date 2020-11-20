@@ -3,16 +3,19 @@ Open-Source code for Project Eva:  A Targeted Testing Protocol for Greece
 ----
 
 <p align="center">
-  <img width="300"  src="https://pressroom.usc.edu/files/2020/07/Greece-Covid-web.104655.jpg">
+  <img width="250"  src="https://pressroom.usc.edu/files/2020/07/Greece-Covid-web.104655.jpg">
 </p>
-In the interest of reproducibility, this repository contains open-source code implementing the key *estimation* and *targeted testing* steps of the algorithm underlying Project Eva.  For policy makers and researchers seekign to implement similar systems, please feel free to reach out to the authors below for clarification or help.    
+In the interest of reproducibility, this repository contains open-source code implementing the key *estimation* and *targeted testing* steps of the algorithm underlying Project Eva.  For policy makers and researchers seeking to implement similar systems, please feel free to reach out to the authors below for clarification or help.    
 
-
-<p align="center">
+</br>
+</br>
+<p align="center" style="font-size:160%;">
   :warning: <strong> All sample data provided is SYNTHETIC </strong> :warning:
   </br>
   Inputs and outputs do _not_ represent actual prevalence of Covid19 in Greece or any other nation.
 </p>
+</br>
+</br>
 
 
 
@@ -61,7 +64,7 @@ As mentioned, the authors are currently drafting research publications documenti
 
 ### Estimating Prevalences using a Feature-Based Empirical Bayes Method
 <img align="right" width="200" height="200" src="http://www.fillmurray.com/100/100">
-We define "types" of travelers, and use testing data from the recent past to estimate the COVID19 prevalence for each type via an Empirical Bayes methodology.  In contrast to traditional parametric empirical Bayes approaches using a beta-prior, we use a mixture prior informed by features of the various traveler types.  Updates with this prior are straightforward, and yield beta posteriors for each traveler type.  These estimates are used to inform various dashboards (not included in repository), including, e.g., the one at right (included in _sample_outputs/_). 
+We define "types" of travelers, and use testing data from the recent past to estimate the COVID19 prevalence for each type via an Empirical Bayes methodology.  In contrast to traditional parametric empirical Bayes approaches using a beta-prior, we use a mixture prior informed by features of the various traveler types.  Updates with this prior are straightforward, and yield beta posteriors for each traveler type.  These estimates are used to inform various dashboards (not included in repository), including, e.g., the one at right (included in *sample_outputs/*). 
 
 The model and algorithm allow for very granular definitions of "type" (e.g. men from Los Angeles, CA, USA between the age of 30-40 traveling alone who have not visited any other countries in last 2 weeks) and also very rich features in defining the prior. In deployment, we periodically reassessed to fit the highest-fidelity model reasonably supported by the quality and quantity of data available at that time.  
 
@@ -80,11 +83,11 @@ Code is written in R and located in the folder _src/_. The code is written in R 
  - _dailyRun.r_ executes the empirical bayes fitting and bandit allocation described above.  All outputs are written to _/sample_outputs/_  
  - _featureCheck.R_ performs the analysis above to identify potentially significant additional types to add.  This file requires that dailyRun.r was run previously before running as it uses outputs from _/sample_outputs/_ in the procedure.
 
-This algorithm references various data sources in the folder _sample_input_data_fake/_.  In deployment, these data sources are populated by Eva's backend databases with realtime data from the last 16 days (_hist_db_working.csv_) and all travelers scheduled to arrive tomorrow (_pass_manifest.csv_).  The remaining files are "static data" that is updated periodically in consultation with the Greek Government Covid19 Taskforce, including
- - _port_budgets.csv_ : The number of tests available at each port of entry on a daily basis.
- - _countries_allowed.csv_ : The list of countries that are permitted to travel to Greece.  This list is developed in conjuction with the European Union.
- - _grey_list_start_end.csv_ : Travelers from these countries are required to demonstrate a negative PCR test before travel.  This list is updated periodically in consultation with the Greek Government Covid19 Taskforce based on Eva's estimates of Covid19 Prevalence and public data on reported cases.  
- - _city_types.csv_ : As discussed above, a list of special cities to be treated separately when defining types. 
+This algorithm references various data sources in the folder *sample_input_data_fake/*.  In deployment, these data sources are populated by Eva's backend databases with realtime data from the last 16 days (*hist_db_working.csv*) and all travelers scheduled to arrive tomorrow (*pass_manifest.csv*).  The remaining files are "static data" that is updated periodically in consultation with the Greek Government Covid19 Taskforce, including
+ - *port_budgets.csv* : The number of tests available at each port of entry on a daily basis.
+ - *countries_allowed.csv* : The list of countries that are permitted to travel to Greece.  This list is developed in conjuction with the European Union.
+ - *grey_list_start_end.csv* : Travelers from these countries are required to demonstrate a negative PCR test before travel.  This list is updated periodically in consultation with the Greek Government Covid19 Taskforce based on Eva's estimates of Covid19 Prevalence and public data on reported cases.  
+ - *city_types.csv* : As discussed above, a list of special cities to be treated separately when defining types. 
 
 Again, we stress that the data provided in this repository are synthetic.
 
