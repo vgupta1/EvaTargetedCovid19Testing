@@ -54,26 +54,23 @@ For more details on Project Eva, please see:
 * [Webinar with Kimon and Vishal](https://www.marshall.usc.edu/news/project-eva-ai-covid-and-greek-tourism)
 
 ## Overview of Algorithm
-As mentioned, the authors are currently drafting research publications documenting Eva's mathematical details.  As a rough description, the underlying algorithm has 3 parts:
+As mentioned, the authors are currently drafting research publications documenting Eva's mathematical details.  At a high level, the underlying algorithm estimates the prevalence of infections from different locations, and allocates tests using a specialized multi-armed bandit algorithm.
 
-### Estimating Prevalences using a Feature-Based Empirical Bayes Method
+### Estimating Prevalences using Empirical Bayes
 <img align="right" width="600" src="https://github.com/vgupta1/EvaTargetedCovid19Testing/blob/main/sample_outputs/eb_estimates_by_cntry.png?raw=true">
 We define "types" of travelers, and use testing data from the recent past to estimate the COVID19 prevalence for each type via an Empirical Bayes methodology.  In contrast to traditional parametric empirical Bayes approaches using a beta-prior, we use a mixture prior informed by features of the various traveler types.  Updates with this prior are straightforward, and yield beta posteriors for each traveler type.  These estimates are used to inform various dashboards (not included in repository), including, e.g., the one at right (included in *sample_outputs*). 
 
-The model and algorithm allow for very granular definitions of "type" (e.g. men from Los Angeles, CA, USA between the age of 30-40 traveling alone who have not visited any other countries in last 2 weeks) and also very rich features in defining the prior. In deployment, we periodically reassessed to fit the highest-fidelity model reasonably supported by the quality and quantity of data available at that time.  
+The model and algorithm allow for very granular definitions of "type" (e.g., men from Los Angeles, CA, USA between the age of 30-40 traveling alone who have not visited any other countries in last 2 weeks); in practice, we found that only passengers' origin location was predictive of prevalence. Thus, we define passenger types as the country of origin for _most_ passengers. Clearly, including more types (e.g., defining passenger locations based on the origin city) will allow a richer parametrization of prevalence estimates, but it also causes higher variance in our estimates since there are thousands of origin cities. To address this bias-variance tradeoff, we use recent testing data to fit a LASSO logistic regression to identify a *sparse* subset of cities that demonstrate systematically higher prevalence after conditioning on the empirical bayes estimate of the origin country. Such cities are broken out as separate types from their parent country (listed in *city_types.csv*). We updated this regression weekly to adapt to recent testing data.
 
-For most of the summer, passenger types were defined as the country of origin for _most_ passengers, the exception being passengers from the select set of city/states listed in *city_types.csv*.  (More on how these cities were chosen below.)  The prior was defined as mixture prior, with 3 beta components, for each of
+The prior was defined as mixture prior, with 3 beta components, for each of
   1. "Black-listed" types for countries not on the *countries_allowed.csv* list (discussed below)
   2. "Grey-Listed" types from countries for which a negative PCR test was required prior to travel and 
-  3.  "White-listed" types for the remainder.  Sample code in this repository follows this structure.
+  3. "White-listed" types for the remainder.  Sample code in this repository follows this structure.
 
 
-### Targeting Passengers Based on a Batched Bandit
+### Testing Allocations using Multi-Armed Bandits
 Given beta-posteriors, we target passengers scheduled to arrive for testing via Batched Bandit algorithm. We use a one-step lookahead approximation to the Gittins index to appropriately balance exploration and exploitation, and a customized heuristic to ensure that testing allocations respect the budgets at each port of entry while accounting for the (sometimes significant) incidence of "no-shows" (passengers who are scheduled to arrive who cancel their trip last minute).  We note that due to operational constraints, this step is performed once daily, meaning in each "batch" of the bandit we are assigning aproximately 8K tests to approximately 60K potential passengers.  (The sample data provided is smaller than these representative numbers).  
 
-
-### Identifying "Special" City/States in Type Definition
-As mentioned, we periodically revisit the definition of "type" in the algorithm to allow for the finest granularity possible.  As a heuristic, we use recent data to fit a logistic regression to predict observed prevalence using our empirical bayes estimates and city of origin as features, combined with a lasso penalty.  Any cities that have positive coefficients in the resulting fit are broken out as separate types from their parent country.  
 
 ## Structure of Repository
 Code is written in R and located in the folder _src/_. The code is written in R and is mostly easily accessed via the R-Studio Project included in the folder.  
