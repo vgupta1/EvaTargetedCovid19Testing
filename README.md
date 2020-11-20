@@ -5,11 +5,16 @@ Open-Source code for Project Eva:  A Targeted Testing Protocol for Greece
 <p align="center">
   <img width="300"  src="https://pressroom.usc.edu/files/2020/07/Greece-Covid-web.104655.jpg">
 </p>
-In the interest of reproducibility, this repository contains open-source code implementing the key **estimation** and **targeted testing** steps of the algorithm underlying Project Eva.  For policy makers and researchers seekign to implement similar systems, please feel free to reach out to the authors below for clarification or help.    
+In the interest of reproducibility, this repository contains open-source code implementing the key *estimation* and *targeted testing* steps of the algorithm underlying Project Eva.  For policy makers and researchers seekign to implement similar systems, please feel free to reach out to the authors below for clarification or help.    
 
-> :warning: **All sample data provided is SYNTHETIC** 
 
-> Inputs and outputs do _not_ represent actual prevalence of Covid19 in Greece or any other nation.
+<p align="center">
+  :warning: <strong> All sample data provided is SYNTHETIC </strong> :warning:
+  </br>
+  Inputs and outputs do _not_ represent actual prevalence of Covid19 in Greece or any other nation.
+</p>
+
+
 
 
 
