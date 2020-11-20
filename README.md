@@ -63,7 +63,7 @@ For more details on Project Eva, please see:
 As mentioned, the authors are currently drafting research publications documenting Eva's mathematical details.  As a rough description, the underlying algorithm has 3 parts:
 
 ### Estimating Prevalences using a Feature-Based Empirical Bayes Method
-<img align="right" width="200" height="200" src="http://www.fillmurray.com/100/100">
+<img align="right" width="400" src="https://github.com/vgupta1/EvaTargetedCovid19Testing/blob/main/sample_outputs/eb_estimates_by_cntry.png?raw=true">
 We define "types" of travelers, and use testing data from the recent past to estimate the COVID19 prevalence for each type via an Empirical Bayes methodology.  In contrast to traditional parametric empirical Bayes approaches using a beta-prior, we use a mixture prior informed by features of the various traveler types.  Updates with this prior are straightforward, and yield beta posteriors for each traveler type.  These estimates are used to inform various dashboards (not included in repository), including, e.g., the one at right (included in *sample_outputs/*). 
 
 The model and algorithm allow for very granular definitions of "type" (e.g. men from Los Angeles, CA, USA between the age of 30-40 traveling alone who have not visited any other countries in last 2 weeks) and also very rich features in defining the prior. In deployment, we periodically reassessed to fit the highest-fidelity model reasonably supported by the quality and quantity of data available at that time.  
