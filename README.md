@@ -3,23 +3,17 @@ Open-Source code for Project Eva:  A Targeted Testing Protocol for Greece
 ----
 
 <p align="center">
-  <img width="250"  src="https://pressroom.usc.edu/files/2020/07/Greece-Covid-web.104655.jpg">
+<img width="250" src="https://pressroom.usc.edu/files/2020/07/Greece-Covid-web.104655.jpg">
 </p>
 In the interest of reproducibility, this repository contains open-source code implementing the key *estimation* and *targeted testing* steps of the algorithm underlying Project Eva.  For policy makers and researchers seeking to implement similar systems, please feel free to reach out to the authors below for clarification or help.    
 
 </br>
-</br>
-<p align="center" style="font-size:160%;">
+<p align="center">
   :warning: <strong> All sample data provided is SYNTHETIC </strong> :warning:
   </br>
-  Inputs and outputs do _not_ represent actual prevalence of Covid19 in Greece or any other nation.
+  Inputs and outputs do not represent actual prevalence of Covid19 in Greece or any other nation.
 </p>
 </br>
-</br>
-
-
-
-
 
 ## Citing this work
 Team Eva is currently drafting a research paper with the mathematical details of these algorithms in addition to empirical evidence from the summer of 2020 on the effectiveness of Eva.  In the meantime, should you need to cite this work, we politely ask you use the following citation:
@@ -63,12 +57,15 @@ For more details on Project Eva, please see:
 As mentioned, the authors are currently drafting research publications documenting Eva's mathematical details.  As a rough description, the underlying algorithm has 3 parts:
 
 ### Estimating Prevalences using a Feature-Based Empirical Bayes Method
-<img align="right" width="400" src="https://github.com/vgupta1/EvaTargetedCovid19Testing/blob/main/sample_outputs/eb_estimates_by_cntry.png?raw=true">
-We define "types" of travelers, and use testing data from the recent past to estimate the COVID19 prevalence for each type via an Empirical Bayes methodology.  In contrast to traditional parametric empirical Bayes approaches using a beta-prior, we use a mixture prior informed by features of the various traveler types.  Updates with this prior are straightforward, and yield beta posteriors for each traveler type.  These estimates are used to inform various dashboards (not included in repository), including, e.g., the one at right (included in *sample_outputs/*). 
+<img align="right" width="600" src="https://github.com/vgupta1/EvaTargetedCovid19Testing/blob/main/sample_outputs/eb_estimates_by_cntry.png?raw=true">
+We define "types" of travelers, and use testing data from the recent past to estimate the COVID19 prevalence for each type via an Empirical Bayes methodology.  In contrast to traditional parametric empirical Bayes approaches using a beta-prior, we use a mixture prior informed by features of the various traveler types.  Updates with this prior are straightforward, and yield beta posteriors for each traveler type.  These estimates are used to inform various dashboards (not included in repository), including, e.g., the one at right (included in *sample_outputs*). 
 
 The model and algorithm allow for very granular definitions of "type" (e.g. men from Los Angeles, CA, USA between the age of 30-40 traveling alone who have not visited any other countries in last 2 weeks) and also very rich features in defining the prior. In deployment, we periodically reassessed to fit the highest-fidelity model reasonably supported by the quality and quantity of data available at that time.  
 
-For most of the summer, passenger types were defined as the country of origin for _most_ passengers, the exception being passengers from the select set of city/states listed in _city_types.csv_.  (More on how these cities were chosen below.)  The prior was defined as mixture prior, with 3 beta components, for each of 1) "Black-listed" types for countries not on the _countries_allowed.csv_ list (discussed below) 2) "Grey-Listed" types from countries for which a negative PCR test was required prior to travel and 3) "White-listed" types for the remainder.  Sample code in this repository follows this structure.
+For most of the summer, passenger types were defined as the country of origin for _most_ passengers, the exception being passengers from the select set of city/states listed in *city_types.csv*.  (More on how these cities were chosen below.)  The prior was defined as mixture prior, with 3 beta components, for each of
+  1. "Black-listed" types for countries not on the *countries_allowed.csv* list (discussed below)
+  2. "Grey-Listed" types from countries for which a negative PCR test was required prior to travel and 
+  3.  "White-listed" types for the remainder.  Sample code in this repository follows this structure.
 
 
 ### Targeting Passengers Based on a Batched Bandit
