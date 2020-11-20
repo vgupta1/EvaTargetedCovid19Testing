@@ -52,6 +52,7 @@ Necessarily, in addition to the underlying mathematical algorithm, Eva involves 
 For more details on Project Eva, please see:
 * [USC Press Release on Project Eva](https://pressroom.usc.edu/reopen-greek-economy/)
 * [Webinar with Kimon and Vishal](https://www.marshall.usc.edu/news/project-eva-ai-covid-and-greek-tourism)
+* [Algorithm Overview with Hamsa](https://www.youtube.com/watch?v=I_OUdIih_00&feature=emb_title&ab_channel=SimonsInstitute)
 
 ## Overview of Algorithm
 As mentioned, the authors are currently drafting research publications documenting Eva's mathematical details.  At a high level, the underlying algorithm estimates the prevalence of infections from different locations, and allocates tests using a specialized multi-armed bandit algorithm.
