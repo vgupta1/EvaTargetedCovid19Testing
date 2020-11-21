@@ -29,10 +29,6 @@ gittinsBandit <- function(manifest, ports, types, g){
   gittins[,"numLeft"] = NA
   gittins[,"alloc"] = 0
   
-  #Artificial widening to encourage some exploration
-  gittins$a <- gittins$a/10
-  gittins$b <- gittins$b/10
-  
   # set everyone to initially not test
   manifest$to_test <- FALSE
   
@@ -48,8 +44,8 @@ gittinsBandit <- function(manifest, ports, types, g){
     # get params (WIDENING: add .5 to a and b when computing index)
     # artificial certainty-equivalent update for tests in last 48 hours
     succ = gittins[i, "a"]/(gittins[i, "a"] + gittins[i, "b"])
-    a = gittins[i,"a"] + gittins[i,"tests_last_48"] * succ  + 0.5
-    b = gittins[i,"b"] + gittins[i,"tests_last_48"] * (1 - succ)  + 0.5
+    a = gittins[i,"a"] + gittins[i,"tests_last_48"] * succ  + 0.25
+    b = gittins[i,"b"] + gittins[i,"tests_last_48"] * (1 - succ)  + 0.25
     
     # compute gittins index
     f <- function(x) (x - (a/(a+b))*(1 - g*pbeta(x, a+1, b)) + g*x*(1 - pbeta(x, a, b)))
@@ -85,9 +81,9 @@ gittinsBandit <- function(manifest, ports, types, g){
     manifest[ind, "to_test"] <- TRUE
     
     # update succ, fail, gittins, curr prev (WIDENING: add .5 to a and b when computing index)
-    a = gittins[ind_loc, "a"] + gittins[ind_loc, "a"]/(gittins[ind_loc, "a"] + gittins[ind_loc, "b"]) +.5
-    b = gittins[ind_loc, "b"] + gittins[ind_loc, "b"]/(gittins[ind_loc, "a"] + gittins[ind_loc, "b"]) +.5
-    gittins[ind_loc, c("a", "b", "index")] <- c(a-.5, b-.5, uniroot(f, c(0,1))$root)
+    a = gittins[ind_loc, "a"] + gittins[ind_loc, "a"]/(gittins[ind_loc, "a"] + gittins[ind_loc, "b"]) +.25
+    b = gittins[ind_loc, "b"] + gittins[ind_loc, "b"]/(gittins[ind_loc, "a"] + gittins[ind_loc, "b"]) +.25
+    gittins[ind_loc, c("a", "b", "index")] <- c(a-.25, b-.25, uniroot(f, c(0,1))$root)
     
     # update num passengers left & assign an allocation to that country
     gittins[ind_loc, "numLeft"] <- gittins[ind_loc, "numLeft"] - 1
