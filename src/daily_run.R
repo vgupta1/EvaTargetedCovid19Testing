@@ -38,8 +38,8 @@ plf_data <- read_csv("../sample_input_data_fake/hist_db_working.csv",
                                        sent_for_test = col_double()
                      ))
 
-
 plf_data <- clean_hist_plf_data(plf_data, today_dt, log_file)
+
 
 #Keep track of the tests that were done in the last 48 hours so bandit can adjust
 testing_last_48 <- plf_data %>% 
