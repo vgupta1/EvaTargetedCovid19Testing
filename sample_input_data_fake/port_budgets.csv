@@ -2,7 +2,7 @@ Entry_point,Capacity,Target_Capacity
 Entry_1,800,600
 Entry_2,0,0
 Entry_3,0,0
-Entry_4,300,300
+Entry_4,600,600
 Entry_5,50,50
 Entry_6,50,50
 Entry_7,0,0
@@ -15,7 +15,7 @@ Entry_13,100,100
 Entry_14,50,50
 Entry_15,100,100
 Entry_16,50,50
-Entry_17,1200,1200
+Entry_17,2200,2200
 Entry_18,200,200
 Entry_19,180,180
 Entry_20,120,120
