@@ -5,7 +5,10 @@ Open-Source code for Project Eva:  A Targeted Testing Protocol for Greece
 <p align="center">
 <img width="250" src="https://pressroom.usc.edu/files/2020/07/Greece-Covid-web.104655.jpg">
 </p>
-In the interest of reproducibility, this repository contains open-source code implementing the key *estimation* and *targeted testing* steps of the algorithm underlying Project Eva.  For policy makers and researchers seeking to implement similar systems, please feel free to reach out to the authors below for clarification or help.    
+In the interest of reproducibility, this repository contains open-source code implementing the key *estimation* and *targeted testing* steps of the algorithm underlying Project Eva.  This version of the algorithm was in deployment from 6 Aug. to 1 Nov. 2020.  
+
+
+For policy makers and researchers seeking to implement similar systems, please feel free to reach out to the authors below for clarification or help.    
 
 </br>
 </br>
@@ -17,14 +20,15 @@ In the interest of reproducibility, this repository contains open-source code im
 </br>
 
 ## Citing this work
-Team Eva is currently drafting a research paper with the mathematical details of these algorithms in addition to empirical evidence from the summer of 2020 on the effectiveness of Eva.  In the meantime, should you need to cite this work, we politely ask you use the following citation:
-
+Team Eva has a research paper with the mathematical details of these algorithms in addition to empirical evidence from the summer of 2020 on the effectiveness of Eva.  Should you use this code or need to cite that work, we politely ask you use the following citation:
 ```
-@misc{bdgv2020Covid19,
-  title={Real-Time, Targeted COVID-19 Testing at the Greek Border},
-  author={Bastani, Hamsa and Drakopoulos, Kimon and Gupta, Vishal and Vlachogiannis, Jon},
-  url={https://github.com/vgupta1/EvaTargetedCovid19Testing/}
-  note={Open-Source Software}
+@article{bastani2021deploying,
+  title={Deploying an Artificial Intelligence System for Covid-19 Testing at the Greek Border},
+  author={Bastani, Hamsa and Drakopoulos, Kimon and Gupta, Vishal and Vlachogiannis, Jon and Hadjicristodoulou, Christos and Lagiou, Pagona and Magiorkinis, Gkikas and Paraskevis, Dimitrios and Tsiodras, Sotirios}, 
+  year={2021},
+  month={Feb.},
+  url={http://dx.doi.org/10.2139/ssrn.3789038}, 
+  journal={SSRN}
 }
 ```
 
